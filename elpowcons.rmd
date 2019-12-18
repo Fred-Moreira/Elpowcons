@@ -1,12 +1,38 @@
 ---
-title: "Elpowcons"
+title: "Case Study: Electric Power Consumption"
 author: "Lauri Varmann"
-date: "18 detsember 2019"
-output: html_document
+date: "18 December 2019"
+output:
+  html_document:
+    highlight: tango
+    theme: united
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(here)
+library(data.table)
+library(countrycode)
+library(ggplot2)
+library(magrittr)
+library(ggrepel)
+library(knitr)
+library(kableExtra)
 ```
 
-Start.
+# Data Processing
+
+```{r readData, warning=FALSE}
+ep <- fread(here("data", "epdata.csv"), 
+            skip = 4, header = TRUE,
+            check.names = TRUE)
+```
