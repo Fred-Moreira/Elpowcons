@@ -35,4 +35,17 @@ library(kableExtra)
 ep <- fread(here("data", "epdata.csv"), 
             skip = 4, header = TRUE,
             check.names = TRUE)
+
+# Add Continent to EPC dataset.
+cl <- as.data.table(codelist)[, .(continent, wb)]
+
+epcl <- merge(ep, cl, by.x = "Country.Code", by.y = "wb", all.x = TRUE)
+setnames(epcl, c("continent"), c("Continent"))
+
+EPC <- melt(epcl,
+           id.vars = c("Continent", "Country.Name", "Country.Code", "Indicator.Code"),
+           measure = patterns("^X"),
+           variable.name = "YearC",
+           value.name = c("pctWiP"),
+           na.rm = TRUE)
 ```
